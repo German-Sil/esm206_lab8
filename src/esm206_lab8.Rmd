@@ -53,12 +53,27 @@ Summary statistics (home price, based on city and sale status):
 
 - Find and return in a nice summary table the mean and standard deviation of home price, grouped by city and sale status
 
-```{r}
+```{r, include = FALSE, eval=FALSE}
 homes_sub_stats <- homes_sub %>% 
   group_by(city, status) %>% 
   summarize(mean_price = mean(price),
             sd_price= sd(price))
 
 kableExtra::kable(homes_sub_stats)
+
+# actually i don't even want to run this code: eval = FALSE
+
+ggplot(homes_sub, aes(x=price)) +
+  geom_density(aes(color= city, fill=city), alpha = 0.3) +
+  scale_x_continuous(limits = c(0, 3e6))
+```
+
+Explore the relationship between square footage and home price. CHange color by city and shape by sales status
+
+```{r}
+ggplot(homes_sub, aes(x= sq_ft, y= price)) +
+  geom_point(aes(color= city, shape = status)) +
+  geom_smooth(method="lm")
+
 ```
 
