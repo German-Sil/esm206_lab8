@@ -75,5 +75,38 @@ ggplot(homes_sub, aes(x= sq_ft, y= price)) +
   geom_point(aes(color= city, shape = status)) +
   geom_smooth(method="lm")
 
+
+
+```
+
+## Model the relationship with home price as DV
+
+```{r}
+homes_lm1 <- lm(price ~ city + sq_ft + status + bedrooms + bathrooms + price_per_sq_ft, data = homes_sub) # price per sq ft is redundant, bedrooms and bathrooms may be correlatedd, sqft is also connected to those. 
+
+# Make a subset that only contains the quantitative vairables
+
+homes_quant <- homes_sub %>% 
+  select(price, bedrooms, bathrooms, sq_ft, price_per_sq_ft)
+homes_corr <- cor(homes_quant)
+homes_corr
+
+corrplot(homes_corr, method = "ellipse")
+
+# How wold i explor diagnostic plots?
+
+plot(homes_lm1)
+
+```
+
+Try another model where we simplify this a bit:
+- City
+- SqFt
+- Status
+
+```{r}
+homes_lm2 <- lm(price ~ city + sq_ft + status, data = homes_sub)
+
+plot(homes_lm2)
 ```
 
