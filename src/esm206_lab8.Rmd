@@ -16,8 +16,8 @@ output: html_document
 - Make predictions using a final model
 - git branch
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = TRUE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Attach packages
 
@@ -27,5 +27,38 @@ library(corrplot)
 library(stargazer)
 library(broom)
 library(modelsummary)
+library(janitor)
+```
+
+- Read in data being used in the lab
+- Make a subset called homes_sub that only contains observations from the following cities:
+  - San Luis Obispo
+  - Arroyo Grande
+  - Atascadero
+  - Santa Maria-Orcutt
+
+```{r}
+homes <- read_csv(here("data", "slo_homes.csv"))
+
+homes_sub <- homes %>% 
+  clean_names() %>% 
+  filter(city %in% c("Arroyo Grande", "San Luis Obispo", "Atascadero", "Santa Maria-Orcutt"))
+
+```
+
+# Do a little exploring of the data
+
+
+Summary statistics (home price, based on city and sale status):
+
+- Find and return in a nice summary table the mean and standard deviation of home price, grouped by city and sale status
+
+```{r}
+homes_sub_stats <- homes_sub %>% 
+  group_by(city, status) %>% 
+  summarize(mean_price = mean(price),
+            sd_price= sd(price))
+
+kableExtra::kable(homes_sub_stats)
 ```
 
