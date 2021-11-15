@@ -1,0 +1,31 @@
+---
+title: "Lab 8 Notes"
+author: "German Silva"
+date: "11/15/2021"
+output: html_document
+---
+
+**Lab 8 Objectives:**
+
+- Explore multivariate data (SLO housing prices)
+- Perform multiple linear regression
+- Assess diagnostics
+- Compare different models by AIC
+- Explain model outputs
+- Make a nice table of regression results
+- Make predictions using a final model
+- git branch
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Attach packages
+
+library(tidyverse)
+library(here)
+library(corrplot)
+library(stargazer)
+library(broom)
+library(modelsummary)
+```
+
