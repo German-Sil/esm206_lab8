@@ -110,3 +110,52 @@ homes_lm2 <- lm(price ~ city + sq_ft + status, data = homes_sub)
 plot(homes_lm2)
 ```
 
+Find the AIC value of each model
+```{r}
+AIC(homes_lm1)
+AIC(homes_lm2)
+```
+
+Try another permutation of this model that you think might make sense, check out and cpmpare the model fit, outputs, and AIC value
+
+```{r}
+homes_lm3 <- lm(price ~ sq_ft + city + status + bedrooms + bathrooms, data = homes_sub)
+
+homes_lm4 <- lm(price ~ sq_ft + city + status + bathrooms, data = homes_sub)
+
+homes_lm5 <- lm(price ~ sq_ft + city + status + bedrooms, data = homes_sub)
+
+homes_lm6 <- lm(price ~ price_per_sq_ft + city + status, data = homes_sub)
+
+homes_lm7 <- lm(price ~ sq_ft + city, data = homes_sub)
+```
+
+```{r}
+AIC(homes_lm1)
+AIC(homes_lm2)
+AIC(homes_lm3)
+AIC(homes_lm4)
+AIC(homes_lm5)
+AIC(homes_lm6)
+AIC(homes_lm7)
+```
+
+Use `modelsummary` to show model outputs side-by-side:
+
+If you use modelsummary to return model outputs of multiple models, it wants you to feedit to it as a list
+```{r}
+
+modelsummary(list(homes_lm1, homes_lm2, homes_lm5, homes_lm7))
+```
+
+## Start making predictions with this model
+
+Use `broom::augment()`
+
+```{r}
+homes_predicted <- augment(homes_lm1)
+```
+
+Use the `predict()` function to try out your model on new scenarios that you create.
+
+
